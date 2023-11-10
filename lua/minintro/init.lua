@@ -6,11 +6,13 @@ local intro_logo = {
 	" ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║",
 	" ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║",
 	" ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║",
-	" ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝"
+	" ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝",
+  "                      ~with Spider                     ",
 }
 
 local PLUGIN_NAME = "minintro"
-local DEFAULT_COLOR = "#98c379"
+local DEFAULT_COLOR = "#e66679"
+local DEFAULT_AUX_COLOR = "#1bdabe"
 local INTRO_LOGO_HEIGHT = #intro_logo
 local INTRO_LOGO_WIDTH = 55
 
@@ -53,8 +55,12 @@ local function draw_minintro(buf, logo_width, logo_height)
 	lock_buf(buf)
 
 	vim.api.nvim_buf_set_extmark(buf, highlight_ns_id, start_row, start_col, {
-		end_row = start_row + INTRO_LOGO_HEIGHT,
+		end_row = start_row + INTRO_LOGO_HEIGHT - 1,
 		hl_group = "Default"
+	})
+	vim.api.nvim_buf_set_extmark(buf, highlight_ns_id, start_row + INTRO_LOGO_HEIGHT - 1, start_col, {
+		end_row = start_row + INTRO_LOGO_HEIGHT,
+		hl_group = "Auxiliary"
 	})
 end
 
@@ -111,6 +117,7 @@ end
 local function setup(options)
 	options = options or {}
 	vim.api.nvim_set_hl(highlight_ns_id, "Default", { fg = options.color or DEFAULT_COLOR })
+	vim.api.nvim_set_hl(highlight_ns_id, "Auxiliary", { fg = options.aux_color or DEFAULT_AUX_COLOR })
 	vim.api.nvim_set_hl_ns(highlight_ns_id)
 
 	vim.api.nvim_create_autocmd("VimEnter", {
