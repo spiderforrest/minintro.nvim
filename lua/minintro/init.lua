@@ -83,7 +83,7 @@ local function set_options()
 	vim.opt_local.relativenumber = false
 	vim.opt_local.list = false
 	vim.opt_local.colorcolumn = "0"
-  vim.opt.fillchars = { eob = " " }
+  vim.opt_local.fillchars = { eob = " " }
 
 end
 
